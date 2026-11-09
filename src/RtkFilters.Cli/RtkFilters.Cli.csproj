@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>rtk-dotnet</AssemblyName>
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>rtk-dotnet</ToolCommandName>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <Description>Unofficial .NET port of rtk-ai/rtk output filters (Apache-2.0 subset; excludes BUSL-1.1 engine/proxy).</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RtkFilters\RtkFilters.csproj" />
+  </ItemGroup>
+
+</Project>

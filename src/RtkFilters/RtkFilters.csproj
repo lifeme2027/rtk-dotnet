@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>RtkFilters</RootNamespace>
+    <Description>Unofficial .NET port of the Apache-2.0 TOML output filters from rtk-ai/rtk.</Description>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Tomlyn" Version="0.19.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Verbatim copies of upstream src/filters/*.toml at the commit in upstream/UPSTREAM_COMMIT -->
+    <EmbeddedResource Include="..\..\upstream\filters\*.toml" LogicalName="RtkFilters.Builtin.%(Filename)%(Extension)" />
+  </ItemGroup>
+
+</Project>
