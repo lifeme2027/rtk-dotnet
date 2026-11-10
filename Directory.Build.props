@@ -16,4 +16,10 @@
     <PackageTags>rtk;filters;tokens;cli;dotnet-tool;unofficial</PackageTags>
     <NeutralLanguage>en</NeutralLanguage>
   </PropertyGroup>
+  <!-- Remap local source paths in Release/pack outputs so nupkgs are machine-agnostic. -->
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+    <DeterministicSourcePaths>true</DeterministicSourcePaths>
+    <PathMap>$(MSBuildThisFileDirectory)=/_/</PathMap>
+  </PropertyGroup>
 </Project>

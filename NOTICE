@@ -22,3 +22,39 @@ engine/ or proxy/ directories of upstream rtk.
 
 Upstream did not ship a NOTICE file at the pinned commit. This NOTICE exists
 to satisfy Apache-2.0 attribution for the port.
+
+Third-party software
+--------------------
+
+The rtk-dotnet tool package redistributes Tomlyn 0.19.0
+(https://github.com/xoofx/Tomlyn), a TOML parser by Alexandre Mutel,
+licensed under the BSD 2-Clause License. The library package references
+Tomlyn as a NuGet dependency and does not bundle the assembly.
+
+The copyright notice and license text below are copied from the official
+Tomlyn repository at tag 0.19.0 (license.txt), which is the release that
+ships Tomlyn 0.19.0:
+
+Copyright (c) 2019-2022, Alexandre Mutel
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification
+, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.

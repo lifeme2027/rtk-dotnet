@@ -107,8 +107,8 @@ Token estimates use upstream `rtk-text` semantics: `ceil(utf8_bytes / 4)`.
 engine fixtures against `tools/parity-rs` (Rust `regex` + the upstream pipeline).
 
 - Upstream pin: `08a261a0d081ffe11a32986e2f4d76f3fdc33abb`
-- 151 inline tests + 9 extra engine fixtures = 160 cases
-- Rust vs .NET consistent: **160**
+- 151 inline tests + 12 extra engine fixtures = 163 cases
+- Rust vs .NET consistent: **163**
 - Rust vs .NET inconsistent: **0**
 - Mismatches against the TOML `expected` values: **0**
 
@@ -149,7 +149,7 @@ for the exact captured output of a run.
 - No dedicated command modules, hooks, trust store, tee/recovery files, or
   `gain` dashboard.
 - Rust `regex` and .NET `Regex` can still differ on untested edge cases. None
-  showed up in the 160 parity cases at this pin.
+  showed up in the 163 parity cases at this pin.
 - `git`, `dotnet test`, and other commands that upstream handles in Rust have
   no TOML filter here.
 - Custom project/user filter files are not loaded.

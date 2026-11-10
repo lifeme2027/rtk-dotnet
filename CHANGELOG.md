@@ -20,7 +20,7 @@ First locally packable release of RtkFilters.Net / `rtk-dotnet`.
   `rtk-dotnet` dotnet tool and the `RtkFilters.Net` library (`dotnet pack`).
   Package descriptions start with the `Unofficial` prefix.
 - `tools/parity-rs` + `tools/parity.py`: compare this engine with a standalone
-  Rust copy of the Apache-2.0 TOML pipeline (no BUSL code). 160/160 cases
+  Rust copy of the Apache-2.0 TOML pipeline (no BUSL code). 163/163 cases
   consistent at upstream pin `08a261a`.
 - `tools/measure-tokens.py` and `tools/token-savings.md` for real token-savings
   measurements (`ceil(utf8_bytes / 4)`).
@@ -33,6 +33,13 @@ First locally packable release of RtkFilters.Net / `rtk-dotnet`.
 
 - Token estimates now use upstream `ceil(utf8_byte_length / 4)` instead of
   truncating integer division.
+- Release/pack builds set `ContinuousIntegrationBuild`, `DeterministicSourcePaths`,
+  and `PathMap` so nupkgs do not embed machine-local absolute paths. Sample
+  output in `tools/token-savings.md` now uses repo-relative paths.
+- NOTICE includes the Tomlyn 0.19.0 BSD-2-Clause copyright and license text,
+  required because the tool package redistributes `Tomlyn.dll`.
+- `tools/parity.py` writes the report date automatically, drops unused helpers,
+  and adds head-only, tail-only, and head+max_lines fixtures.
 
 ### Not in this release
 

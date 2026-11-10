@@ -5,9 +5,9 @@
 - Rust oracle: `tools/parity-rs` (copy of Apache-2.0 `toml_filter` + `rtk-text` only; no BUSL code).
 - Official `rtk` binary was not built: upstream requires Rust 1.91 and this box has rustc 1.85.1.
 - Upstream inline tests: 151
-- Extra engine fixtures: 9
-- Compared: 160
-- Rust vs .NET consistent: 160
+- Extra engine fixtures: 12
+- Compared: 163
+- Rust vs .NET consistent: 163
 - Rust vs .NET inconsistent: 0
 - Rust vs TOML expected mismatches: 0
 - .NET vs TOML expected mismatches: 0
