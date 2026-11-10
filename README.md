@@ -128,11 +128,15 @@ with `python3 tools/measure-tokens.py` after a `dotnet clean` + `dotnet build`
 of the tree, plus the checked-in sample logs and the broken
 `samples/failing-app` project. Live restore/elapsed lines can move a live
 build's token count by a few tokens; the sample logs are reproducible.
+The failing-app command is invoked from the repository root; MSBuild still
+emits absolute paths, and the repository-root prefix is rewritten to a
+repo-relative path before tokens are counted (see
+[tools/token-savings.md](tools/token-savings.md)).
 
 | Scenario | Filter matched | Raw tokens | Filtered tokens | Saved | % saved |
 |---|---|---:|---:|---:|---:|
 | This repo: `dotnet build -c Release` | yes (`dotnet-build`) | 122 | 6 | 116 | 95.1% |
-| `samples/failing-app` live `dotnet build` (failure) | yes (`dotnet-build`) | 134 | 124 | 10 | 7.5% |
+| `samples/failing-app` live `dotnet build` (failure) | yes (`dotnet-build`) | 98 | 88 | 10 | 10.2% |
 | `samples/dotnet-build-success.log` | yes (`dotnet-build`) | 81 | 6 | 75 | 92.6% |
 | `samples/dotnet-build-failure.log` | yes (`dotnet-build`) | 77 | 39 | 38 | 49.4% |
 | This repo: `dotnet test` | no (passthrough) | (varies) | same as raw | 0 | 0% |
@@ -142,7 +146,8 @@ A successful `dotnet build` short-circuits to `ok (build succeeded)`. A failed
 build keeps the compiler error lines, the `Build FAILED.` summary, and the
 warning/error counts; only banners and blank lines are stripped, so the savings
 are smaller on purpose. See [tools/token-savings.md](tools/token-savings.md)
-for the exact captured output of a run.
+for the captured output of a run. The failing-app block there is the
+rewritten log described above, and its token counts match the table.
 
 ## Known limitations
 

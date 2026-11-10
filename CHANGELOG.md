@@ -40,6 +40,10 @@ First locally packable release of RtkFilters.Net / `rtk-dotnet`.
   required because the tool package redistributes `Tomlyn.dll`.
 - `tools/parity.py` writes the report date automatically, drops unused helpers,
   and adds head-only, tail-only, and head+max_lines fixtures.
+- Live `samples/failing-app` token numbers were remeasured from the repository
+  root. MSBuild absolute path prefixes are rewritten to repo-relative paths
+  before counting, and the checked-in output matches those numbers
+  (`98 -> 88`, 10.2% saved).
 
 ### Not in this release
 

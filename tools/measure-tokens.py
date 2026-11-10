@@ -5,6 +5,10 @@ Token estimate matches upstream rtk-text: ceil(utf8_byte_length / 4).
 The raw side is the child's stdout (stderr is only included when the matching
 filter sets filter_stderr). The filtered side is the text rtk-dotnet writes to
 stdout; the `[rtk-dotnet] filter=...` diagnostic on stderr is not counted.
+
+The failing-app sample is invoked from the repository root with a relative
+project path. MSBuild still emits absolute paths, so the repository-root
+prefix is rewritten to a repo-relative path before tokens are counted.
 """
 from __future__ import annotations
 
@@ -20,6 +24,14 @@ DOTNET = ROOT / "src" / "RtkFilters.Cli" / "bin" / "Release" / "net8.0" / "rtk-d
 def estimate(text: str) -> int:
     n = len(text.encode("utf-8"))
     return math.ceil(n / 4.0) if n else 0
+
+
+def rewrite_repo_relative(text: str) -> str:
+    """Rewrite MSBuild absolute prefixes under ROOT to repo-relative paths."""
+    root = str(ROOT)
+    text = text.replace(root + "/", "")
+    text = text.replace(root, ".")
+    return text
 
 
 def run_capture(cmd: list[str], *, cwd: Path) -> tuple[int, str, str]:
@@ -86,12 +98,23 @@ def main() -> int:
     rows.append(row("this repo: dotnet build -c Release", "dotnet build -c Release", raw, f"exit {code}"))
 
     # 2) Failed build example (the checked-in broken sample).
-    print("dotnet build (failing-app sample)...", flush=True)
-    fail_dir = ROOT / "samples" / "failing-app"
-    code, out, err = run_capture(
-        ["dotnet", "build", "-c", "Release", "--nologo"],
-        cwd=fail_dir,
-    )
+    # Invoke from the repo root with a relative project path, then rewrite
+    # MSBuild's absolute root prefix so the checked-in numbers do not embed
+    # a machine-local path. A warm-up restore makes the measured log use
+    # "All projects are up-to-date for restore." instead of a "Restored
+    # <abspath>" line.
+    print("dotnet build (failing-app sample, from repo root)...", flush=True)
+    fail_cmd = [
+        "dotnet",
+        "build",
+        "-c",
+        "Release",
+        "--nologo",
+        "samples/failing-app/FailingApp.csproj",
+    ]
+    subprocess.run(fail_cmd, cwd=ROOT, text=True, capture_output=True)
+    code, out, err = run_capture(fail_cmd, cwd=ROOT)
+    out = rewrite_repo_relative(out)
     rows.append(
         row(
             "failing-app sample: dotnet build (expected failure)",
