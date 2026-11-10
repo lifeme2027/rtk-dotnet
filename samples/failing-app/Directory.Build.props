@@ -1,0 +1,2 @@
+<!-- Stop the repo root Directory.Build.props from applying to this broken sample. -->
+<Project />

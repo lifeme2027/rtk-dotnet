@@ -95,4 +95,102 @@ public class EngineTests
     [Fact]
     public void Unsupported_schema_version_throws() =>
         Assert.Throws<FormatException>(() => FilterRegistry.Parse("schema_version = 2\n", "test"));
+
+    [Theory]
+    [InlineData("", 0)]
+    [InlineData("abcd", 1)]
+    [InlineData("abcde", 2)]
+    [InlineData("a", 1)]
+    [InlineData("12345678", 2)]
+    [InlineData("hello world", 3)]
+    public void Estimate_tokens_matches_upstream_ceil(string text, int expected) =>
+        Assert.Equal(expected, TextUtil.EstimateTokens(text));
+
+    [Fact]
+    public void Estimate_tokens_uses_utf8_byte_length()
+    {
+        // "你好" is 6 UTF-8 bytes -> ceil(6/4) = 2
+        Assert.Equal(2, TextUtil.EstimateTokens("你好"));
+    }
+
+    [Fact]
+    public void Replace_all_occurrences_and_chaining()
+    {
+        var f = One("""
+            [filters.x]
+            match_command = "^x"
+            replace = [{ pattern = "foo", replacement = "bar" }]
+            """);
+        Assert.Equal("bar baz bar\nbar", f.Apply("foo baz foo\nfoo"));
+        var chained = One("""
+            [filters.x]
+            match_command = "^x"
+            replace = [
+              { pattern = "aaa", replacement = "bbb" },
+              { pattern = "bbb", replacement = "ccc" },
+            ]
+            """);
+        Assert.Equal("ccc", chained.Apply("aaa"));
+    }
+
+    [Fact]
+    public void Replace_backreferences()
+    {
+        var f = One("""
+            [filters.x]
+            match_command = "^x"
+            replace = [{ pattern = "(\\w+):(\\w+)", replacement = "$2:$1" }]
+            """);
+        Assert.Equal("world:hello", f.Apply("hello:world"));
+    }
+
+    [Fact]
+    public void Head_only_and_tail_only_insert_omit_marker()
+    {
+        var head = One("[filters.x]\nmatch_command = \"^x\"\nhead_lines = 2\n");
+        Assert.Equal("1\n2\n... (2 lines omitted)", head.Apply("1\n2\n3\n4"));
+        var tail = One("[filters.x]\nmatch_command = \"^x\"\ntail_lines = 2\n");
+        Assert.Equal("... (2 lines omitted)\n3\n4", tail.Apply("1\n2\n3\n4"));
+    }
+
+    [Fact]
+    public void Keep_lines_matching_basic()
+    {
+        var f = One("""
+            [filters.x]
+            match_command = "^x"
+            keep_lines_matching = ["error", "warn"]
+            """);
+        Assert.Equal("error: a\nwarn: b", f.Apply("info\nerror: a\nwarn: b\nok"));
+    }
+
+    [Fact]
+    public void Empty_input_is_empty_output()
+    {
+        var f = One("[filters.x]\nmatch_command = \"^x\"\nreplace = [{ pattern = \"foo\", replacement = \"bar\" }]\n");
+        Assert.Equal("", f.Apply(""));
+    }
+
+    [Fact]
+    public void Builtin_dotnet_build_keeps_errors()
+    {
+        var f = FilterRegistry.LoadBuiltin().Get("dotnet-build");
+        Assert.NotNull(f);
+        var log = "src/Program.cs(10,5): error CS1002: ; expected\nBuild FAILED.\n    0 Warning(s)\n    1 Error(s)\n";
+        var outp = f!.Apply(log);
+        Assert.Contains("error CS1002", outp);
+        Assert.Contains("Build FAILED.", outp);
+        Assert.DoesNotContain("ok (build succeeded)", outp);
+    }
+
+    [Fact]
+    public void Git_and_dotnet_test_have_no_toml_filter()
+    {
+        var reg = FilterRegistry.LoadBuiltin();
+        Assert.Null(reg.FindMatching("git status"));
+        Assert.Null(reg.FindMatching("git diff"));
+        Assert.Null(reg.FindMatching("git log -1"));
+        Assert.Null(reg.FindMatching("dotnet test"));
+        Assert.Equal("dotnet-build", reg.FindMatching("dotnet build -c Release")?.Name);
+    }
 }

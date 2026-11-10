@@ -1,0 +1,16 @@
+[package]
+name = "rtk-parity"
+version = "0.1.0"
+edition = "2021"
+publish = false
+license = "Apache-2.0"
+description = "Standalone Apache-2.0 filter engine extracted from rtk-ai/rtk 08a261a for parity testing against RtkFilters.Net"
+
+[dependencies]
+regex = "1"
+serde = { version = "1", features = ["derive"] }
+toml = "0.8"
+
+[profile.release]
+lto = false
+codegen-units = 16

@@ -1,12 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
+    <RootNamespace>RtkFilters.Tests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\RtkFilters\RtkFilters.csproj" />
+    <ProjectReference Include="..\..\src\RtkFilters.Cli\RtkFilters.Cli.csproj" />
   </ItemGroup>
 
 </Project>

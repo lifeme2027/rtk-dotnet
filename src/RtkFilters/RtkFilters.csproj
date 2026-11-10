@@ -1,13 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
     <RootNamespace>RtkFilters</RootNamespace>
-    <Description>Unofficial .NET port of the Apache-2.0 TOML output filters from rtk-ai/rtk.</Description>
-    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-    <Deterministic>true</Deterministic>
+    <PackageId>RtkFilters.Net</PackageId>
+    <Title>RtkFilters.Net</Title>
+    <Description>Unofficial .NET port of the Apache-2.0 TOML output filters from rtk-ai/rtk. Does not include BUSL-1.1 engine/ or proxy/ code.</Description>
+    <IsPackable>true</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>

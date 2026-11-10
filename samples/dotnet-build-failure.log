@@ -1,0 +1,11 @@
+Microsoft (R) Build Engine version 17.8.3+195e7f5a3
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+  Determining projects to restore...
+src/Program.cs(10,5): error CS1002: ; expected [/tmp/failing-app/FailingApp.csproj]
+
+Build FAILED.
+    0 Warning(s)
+    1 Error(s)
+
+Time Elapsed 00:00:00.42

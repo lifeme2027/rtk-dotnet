@@ -47,6 +47,12 @@ public static class TextUtil
         return result;
     }
 
-    /// <summary>Estimated token count using upstream's documented <c>bytes / 4</c> heuristic.</summary>
-    public static int EstimateTokens(string text) => Encoding.UTF8.GetByteCount(text) / 4;
+    /// <summary>
+    /// Estimated token count matching upstream <c>rtk-text::estimate_tokens</c>:
+    /// <c>ceil(utf8_byte_len / 4.0)</c>. Uses UTF-8 byte length, same as Rust <c>str::len</c>.
+    /// </summary>
+    public static int EstimateTokens(string text) => EstimateTokensFromLen(Encoding.UTF8.GetByteCount(text));
+
+    /// <summary>Upstream <c>estimate_tokens_from_len</c>.</summary>
+    public static int EstimateTokensFromLen(int len) => (int)Math.Ceiling(len / 4.0);
 }

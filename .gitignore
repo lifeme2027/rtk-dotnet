@@ -3,3 +3,7 @@ obj/
 TestResults/
 *.user
 .vs/
+*.nupkg
+tools/parity-rs/target/
+samples/failing-app/bin/
+samples/failing-app/obj/

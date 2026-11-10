@@ -1,0 +1,24 @@
+RtkFilters.Net (rtk-dotnet)
+===========================
+
+This is an unofficial .NET 8 port of a subset of rtk
+(https://github.com/rtk-ai/rtk), pinned at commit
+08a261a0d081ffe11a32986e2f4d76f3fdc33abb.
+
+The port includes translations and verbatim copies of Apache-2.0 licensed
+upstream sources:
+
+  - src/core/toml_filter.rs   (filter pipeline)
+  - text/src/lib.rs           (strip_ansi, truncate, estimate_tokens)
+  - src/filters/*.toml        (copied verbatim to upstream/filters/)
+
+Copyright of the original rtk work: RTK AI Labs.
+Copyright of the .NET translation and additions: RtkFilters.Net contributors.
+
+Licensed under the Apache License, Version 2.0. See the LICENSE file.
+
+This product does not include, and is not derived from, the BUSL-1.1 licensed
+engine/ or proxy/ directories of upstream rtk.
+
+Upstream did not ship a NOTICE file at the pinned commit. This NOTICE exists
+to satisfy Apache-2.0 attribution for the port.
